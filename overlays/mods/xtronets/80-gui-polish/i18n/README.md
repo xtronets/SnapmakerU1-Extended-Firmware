@@ -1,10 +1,19 @@
-# Polskie GUI U1 – aktualizacja tłumaczenia po nowym firmware
+# Polish stock GUI for the Snapmaker U1 – translation tools
+
+> English summary: `i18n.py` keeps the Polish translation in sync with new
+> stock firmware. `extract` pulls the English texts from an upgrade `.bin`,
+> `status` shows what changed, `update` carries over unchanged translations
+> and writes `todo.json` with only new/changed texts, `apply` merges the
+> translated `todo.json`, `check` validates keys and placeholders.
+> Build with `PROFILE=extended-xtronets`. The rest of this file is in Polish.
+
+## Polskie GUI U1 – aktualizacja tłumaczenia po nowym firmware
 
 Narzędzie `i18n.py` porównuje angielskie teksty nowego firmware'u z wersją,
 z której zrobiono tłumaczenie, sam przenosi wszystko, co się nie zmieniło,
 i zostawia do przetłumaczenia tylko nowe lub zmienione teksty.
 
-## Co gdzie leży
+### Co gdzie leży
 
 | Plik | Opis |
 |---|---|
@@ -17,7 +26,7 @@ i zostawia do przetłumaczenia tylko nowe lub zmienione teksty.
 Komunikaty błędów są tłumaczone przez szablony, więc nowy kod błędu, który
 używa znanego zdania (np. kolejna głowica), tłumaczy się sam.
 
-## Krok po kroku (po syncu forka z paxx12)
+### Krok po kroku (po syncu forka z paxx12)
 
 Wszystkie polecenia uruchamiaj w katalogu repo, w środowisku `./dev.sh bash`
 (potrzebne są narzędzia z `make tools` i `unsquashfs`).
@@ -61,7 +70,7 @@ Wszystkie polecenia uruchamiaj w katalogu repo, w środowisku `./dev.sh bash`
    Skrypt budowania ostrzega (`!! WARNING`), jeśli tłumaczenie nie pasuje do
    tekstów w budowanym firmware. Brakujące teksty GUI pokaże wtedy po angielsku.
 
-## Gdy build się zatrzyma na etykiecie „Türkçe”
+### Gdy build się zatrzyma na etykiecie „Türkçe”
 
 Snapmaker zmienił tabelę języków w `/usr/bin/gui`. Trzeba sprawdzić
 (`strings -n 3 usr/bin/gui | grep -n -B3 -A3 tr-TR`), czy slot tureckiego
