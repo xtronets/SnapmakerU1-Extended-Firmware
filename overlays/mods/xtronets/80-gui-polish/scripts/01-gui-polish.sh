@@ -36,6 +36,25 @@ install_as() {
   echo "[+] Installed $(basename "$src") as ${dst#"$ROOTFS_DIR"}"
 }
 
+echo ">> Comparing the Polish translation with this firmware's English texts..."
+python3 - "$CUR_DIR/../i18n/source" "$RES_DIR" <<'EOF'
+import json, sys
+src, res = sys.argv[1], sys.argv[2]
+pairs = (("en-GB.json", "locales/en-GB.json"), ("exception_en-GB.json", "text/exception_en-GB.json"))
+stale = 0
+for snap, stock in pairs:
+    old = json.load(open(f"{src}/{snap}", encoding="utf-8"))
+    new = json.load(open(f"{res}/{stock}", encoding="utf-8"))
+    n = sum(1 for k in new if old.get(k) != new[k]) + sum(1 for k in old if k not in new)
+    if n:
+        print(f"!! WARNING: {stock}: {n} text(s) changed since the translation was made.")
+        stale += n
+if stale:
+    print("!! Missing texts fall back to English. Update with: i18n/i18n.py extract/update/apply (see i18n/README.md)")
+else:
+    print("[+] Translation is up to date with this firmware")
+EOF
+
 install_as "$FILES_DIR/pl.json" "$RES_DIR/locales/tr-TR.json"
 install_as "$FILES_DIR/exception_pl.json" "$RES_DIR/text/exception_tr-TR.json"
 
